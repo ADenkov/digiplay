@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  auth-service:
+    image: 'auth-service:latest'
+    build:
+      context: .
+    container_name: auth-service
+    depends_on:
+      - users-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/users
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+
+  users-db:
+    image: 'postgres:13.1-alpine'
+    container_name: users-db
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
