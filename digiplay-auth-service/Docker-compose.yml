@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+  registry:
+    image: 'digiplay-registry:latest'
+    ports:
+      - "8761:8761"
+    container_name: digiplay-registry
+
+  gateway-service:
+    image: 'digiplay-gateway-service:latest'
+    ports:
+      - "8080:8080"
+    container_name: digiplay-gateway-service
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://digiplay-registry:8761/eureka
+      - zuul.routes.auth-service.path=/auth/**
+      - zuul.routes.auth-service.url=http://auth-service:8081/
+      - zuul.routes.authservice.sensitive-headers=Cookie,Set-Cookie
+
+  auth-service:
+    image: 'auth-service:latest'
+    ports:
+      - "8081:8081"
+    container_name: auth-service
+    depends_on:
+      users-db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://users_db:5432/users_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      - PG_PORT=5432
+      - eureka.client.serviceUrl.defaultZone=http://digiplay-registry:8761/eureka
+
+  users-db:
+    image: 'postgres:13.1-alpine'
+    container_name: users_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=users_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -1,5 +1,6 @@
 package digiplaygateway.filter;
 
+import digiplaygateway.model.WhitelistedRoute;
 import digiplaygateway.service.JwtUserDetailsService;
 import digiplaygateway.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,33 @@ public class AuthFilter extends OncePerRequestFilter {
     private JwtUserDetailsService service;
 
     /**
+     * This method constructs list of unprotected routes
+     *
+     * @return whitelist List<String>
+     */
+    private List<WhitelistedRoute> getWhitelistedRoutes() {
+        List<WhitelistedRoute> whitelist = new ArrayList<>();
+        whitelist.add(new WhitelistedRoute("/auth/api/v1/*", "POST"));
+        return whitelist;
+    }
+
+    /**
+     * This method checks if a route is whitelisted
+     *
+     * @param url    request url
+     * @param method request method
+     * @return boolean
+     */
+    private boolean checkRoute(String url, String method) {
+        for (WhitelistedRoute route : getWhitelistedRoutes()) {
+            if (url.contains(route.getUrlMatcher()) && route.getMethod().equals(method)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Same contract as for {@code doFilter}, but guaranteed to be
      * just invoked once per request within a single request thread.
      * See {@link #shouldNotFilterAsyncDispatch()} for details.
@@ -46,9 +74,7 @@ public class AuthFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 
-
         String authorizationHeader = request.getHeader("Authorization");
-
 
         if (authorizationHeader != null) {
             String token = null;
@@ -58,7 +84,7 @@ public class AuthFilter extends OncePerRequestFilter {
                 token = authorizationHeader.substring(7);
                 try {
                     email = jwtUtil.extractEmail(token);
-                }catch(Exception e){
+                } catch (Exception e) {
                     response.sendError(401);
                 }
             }

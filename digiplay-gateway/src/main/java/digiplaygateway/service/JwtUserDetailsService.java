@@ -19,7 +19,7 @@ public class JwtUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        String url = String.format("http://localhost:8081/api/auth/%s", email);
+        String url = String.format("http://localhost:8081/api/v1/%s", email);
         AppUser user = webClientBuilder
                 .build()
                 .get()
@@ -35,7 +35,7 @@ public class JwtUserDetailsService implements UserDetailsService{
     public Optional<AuthorizedDto> refreshToken(String refreshToken) {
 
         // Refresh the token from auth-service
-        String url = String.format("http://localhost:8082/api/v1/refreshToken?refreshToken=%s", refreshToken);
+        String url = String.format("http://localhost:8081/api/v1/refreshToken?refreshToken=%s", refreshToken);
         AuthorizedDto dto = webClientBuilder
                 .build()
                 .get()

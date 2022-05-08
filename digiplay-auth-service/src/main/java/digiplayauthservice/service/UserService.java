@@ -21,7 +21,7 @@ public class UserService {
         try {
             String encodedPassword = encoder.encode(user.getPassword());
 
-            AppUser newUser = new AppUser(0, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getRole());
+            AppUser newUser = new AppUser(0, user.getFirstName(), user.getLastName(), user.getEmail(), encodedPassword, user.getRole());
             return repository.save(newUser);
         }
         catch(Exception e) {
