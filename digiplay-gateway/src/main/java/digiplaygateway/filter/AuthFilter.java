@@ -104,6 +104,14 @@ public class AuthFilter extends OncePerRequestFilter {
 
             }
 
+        } else {
+            // If there is no token, check if the route is whitelisted
+            String requestURI = request.getRequestURI();
+            String requestMethod = request.getMethod();
+            if (!checkRoute(requestURI, requestMethod)) {
+                response.sendError(401);
+            }
+
         }
         filterChain.doFilter(request, response);
     }

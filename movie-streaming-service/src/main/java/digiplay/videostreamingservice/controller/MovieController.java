@@ -1,11 +1,10 @@
 package digiplay.videostreamingservice.controller;
 
+import digiplay.videostreamingservice.entity.Movie;
 import digiplay.videostreamingservice.service.MovieService;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,23 +16,24 @@ public class MovieController {
 
     public static final String BASE_URL = "/api/v1";
 
+    @Autowired
     private MovieService service;
 
-    @PostMapping()
-    public ResponseEntity<String> saveMovie(@RequestParam("file") MultipartFile file, @RequestParam("name") String name) throws IOException {
-        service.saveMovie(file, name);
+    @PostMapping("/save")
+    public ResponseEntity<String> saveMovie(@RequestBody Movie movie) throws IOException {
+        service.saveMovie(movie);
         return ResponseEntity.ok("Movie saved successfully.");
     }
 
-    @GetMapping("{name}")
-    public ResponseEntity<Resource> getMovieByName(@PathVariable("name") String name){
+    @GetMapping("/movie/{id}")
+    public ResponseEntity<String> getMovieByName(@PathVariable("id") long id){
         return ResponseEntity
-                .ok(new ByteArrayResource(service.getMovie(name).getData()));
+                .ok(service.getMovie(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<String>> getAllMovieNames(){
+    public ResponseEntity<List<Movie>> getAllMovies(){
         return ResponseEntity
-                .ok(service.getAllMovieNames());
+                .ok(service.getAllMovies());
     }
 }

@@ -9,10 +9,12 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    Movie findByName(String name);
+    Movie findById(long id);
 
-    boolean existsByName(String name);
+    boolean existsById(long id);
 
-    @Query(nativeQuery = true, value="SELECT name FROM movie")
-    List<String> getAllEntryNames();
+    List<Movie> findAll();
+
+//    @Query(nativeQuery = true, value="SELECT name FROM movie")
+//    List<String> getAllEntryNames();
 }

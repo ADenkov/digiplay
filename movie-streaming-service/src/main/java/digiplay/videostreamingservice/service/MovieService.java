@@ -1,16 +1,15 @@
 package digiplay.videostreamingservice.service;
 
 import digiplay.videostreamingservice.entity.Movie;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface MovieService {
 
-    Movie getMovie(String name);
+    String getMovie(long id);
 
-    void saveMovie(MultipartFile file, String name) throws IOException;
+    void saveMovie(Movie movie) throws IOException;
 
-    List<String> getAllMovieNames();
+    List<Movie> getAllMovies();
 }
