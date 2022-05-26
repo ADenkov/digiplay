@@ -20,19 +20,9 @@ public class Movie {
 
     private String[] genres;
 
-//    private String starring;
-
     private String releaseDate;
 
     private int rating;
 
     private String data;
-
-//    public Movie(String name, String[] genres, String releaseDate, int rating, String data) {
-//        this.name = name;
-//        this.data = data;
-//        this.genres = genres;
-//        this.releaseDate = releaseDate;
-//        this.rating = rating;
-//    }
 }

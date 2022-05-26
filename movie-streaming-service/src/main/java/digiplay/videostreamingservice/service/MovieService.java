@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MovieService {
 
-    String getMovie(long id);
+    Movie getMovie(long id);
 
     void saveMovie(Movie movie) throws IOException;
 

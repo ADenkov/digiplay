@@ -6,7 +6,11 @@ class AuthService {
     return axios
       .post(API_URL + "login", {
         email,
-        password
+        password,
+      }, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       })
       .then(response => {
         if (response.data.token) {
@@ -24,7 +28,11 @@ class AuthService {
       lastName,
       email,
       password,
-      role
+      role,
+    }, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   }
   getCurrentUser() {

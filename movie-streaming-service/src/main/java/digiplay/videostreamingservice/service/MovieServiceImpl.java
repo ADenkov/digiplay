@@ -17,13 +17,11 @@ public class MovieServiceImpl implements MovieService {
     private MovieRepository repository;
 
     @Override
-    public String getMovie(long id) {
+    public Movie getMovie(long id) {
         if (!repository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
         }
-        Movie mov = repository.findById(id);
-
-        return mov.getData();
+        return repository.findById(id);
     }
 
     @Override

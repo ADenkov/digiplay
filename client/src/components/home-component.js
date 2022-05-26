@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import UserService from "../services/user-service";
+import gateway from "../services/gateway-service";
 
 export default class Home extends Component {
     constructor() {
@@ -19,7 +19,7 @@ export default class Home extends Component {
     //     }
     // }
     async componentDidMount() {
-        UserService.getHomepage().then(
+        gateway.getHomepage().then(
           response => {
             this.setState({
               movies: response.data
@@ -51,7 +51,7 @@ export default class Home extends Component {
                             <div className="col-md-4" key={movie.id}>
                                 <Link to={`/player/${movie.id}`}>
                                     <div className="card border-0">
-                                        <img src={`http://localhost:8082/api/v1/${movie.poster}`} alt={movie.name} />
+                                        <img src={`http://localhost:8080/movies/api/v1/${movie.poster}`} alt={movie.name} />
                                             <div className="card-body">
                                                 <p>{movie.name}</p>
                                                 <p>{movie.duration}</p>

@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Configuration
@@ -52,7 +53,7 @@ public class GatewayConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/api/v1/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/movies/api/v1/save").access("hasAuthority('USER')")
-                .antMatchers(HttpMethod.GET, "/movies/api/v1/**").access("hasAuthority('USER')")
+                .antMatchers(HttpMethod.GET, "/movies/api/v1/movie/**").access("hasAuthority('USER')")
                 .anyRequest()
                 .authenticated()
                 .and()

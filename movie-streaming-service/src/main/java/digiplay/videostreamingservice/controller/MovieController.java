@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(MovieController.BASE_URL)
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieController {
 
     public static final String BASE_URL = "/api/v1";
@@ -26,7 +26,7 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public ResponseEntity<String> getMovieByName(@PathVariable("id") long id){
+    public ResponseEntity<Movie> getMovieByName(@PathVariable("id") long id){
         return ResponseEntity
                 .ok(service.getMovie(id));
     }

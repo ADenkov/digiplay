@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import './App.css';
-import Home from './components/home-component';
-import Player from './Player';
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import "./App.css";
+import Home from "./components/home-component";
+import Player from "./components/player-component";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AuthService from "./services/auth-service";
 import Login from "./components/login-component";
 import Register from "./components/register-component";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
@@ -21,7 +20,7 @@ class App extends Component {
     const user = AuthService.getCurrentUser();
     if (user) {
       this.setState({
-        currentUser: user
+        currentUser: user,
       });
     }
   }
@@ -30,11 +29,9 @@ class App extends Component {
     AuthService.logout();
   }
 
-
   render() {
     const { currentUser } = this.state;
     return (
-      
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
@@ -63,7 +60,7 @@ class App extends Component {
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  Logout
                 </a>
               </li>
             </div>
@@ -83,14 +80,15 @@ class App extends Component {
           )}
         </nav>
         <div className="container mt-3">
-          {/* <Router> */}
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/player/:id" element={<Player />} />
-            </Routes>
-          {/* </Router> */}
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/player" element={<Player />} />
+            <Route exact path="player" element={<Player />}>
+              <Route exact path=":id" element={<Player />} />
+            </Route>
+          </Routes>
         </div>
       </div>
 
@@ -104,4 +102,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;
