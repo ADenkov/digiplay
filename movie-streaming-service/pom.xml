@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>digiplay</groupId>
 	<artifactId>video-streaming-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>video-streaming-service</name>
-	<description>Video streaming service for Digiplay</description>
+	<description>Movie streaming service for Digiplay</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2021.0.2</spring-cloud.version>
@@ -30,20 +30,17 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>6.0.0.Final</version>
 			<type>pom</type>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.6.9.Final</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
