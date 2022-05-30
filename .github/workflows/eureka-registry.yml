@@ -10,8 +10,12 @@ name: Discovery Server CI
 on:
   push:
     branches: [ main ]
+    paths:
+    - 'digiplay-registry/**'
   pull_request:
     branches: [ main ]
+    paths:
+    - 'digiplay-registry/**'
 
 permissions:
   contents: read
