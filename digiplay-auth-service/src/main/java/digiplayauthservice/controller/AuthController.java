@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(AuthController.BASE_URL)
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
 
     public static final String BASE_URL = "/api/v1";
