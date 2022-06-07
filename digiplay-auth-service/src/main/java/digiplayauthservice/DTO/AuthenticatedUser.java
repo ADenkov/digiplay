@@ -7,6 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class AuthenticatedUser {
 
+    private long id;
+
     private String email;
 
     private String token;

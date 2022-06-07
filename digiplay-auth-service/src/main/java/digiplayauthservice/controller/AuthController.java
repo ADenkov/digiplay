@@ -48,12 +48,21 @@ public class AuthController {
             String stringToEncode = authorizedUser.getEmail() + ",has role," + authorizedUser.getRole();
             String refreshToken = Base64.encodeBase64String(stringToEncode.getBytes());
 
-            AuthenticatedUser request = new AuthenticatedUser(credentials.getEmail(), token, authorizedUser.getRole(), refreshToken);
+            AuthenticatedUser request = new AuthenticatedUser(authorizedUser.getId(), credentials.getEmail(), token, authorizedUser.getRole(), refreshToken);
 
             return new ResponseEntity<>(request, HttpStatus.OK);
         }
 
         return new ResponseEntity<>("Wrong Credentials", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> getByEmail(@PathVariable Long id) {
+        boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            return new ResponseEntity<>("User with id " + id + " deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User with id " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/validateToken")
@@ -81,10 +90,10 @@ public class AuthController {
 
         AppUser user = userService.getByEmail(email);
 
-        if(user!=null && user.getRole().equals(decodedToken[2])){
+        if (user != null && user.getRole().equals(decodedToken[2])) {
             // Generate new JWT
             String newJwt = jwtService.generateToken(email);
-            AuthenticatedUser dto = new AuthenticatedUser(email,newJwt,user.getRole(),refreshToken);
+            AuthenticatedUser dto = new AuthenticatedUser(user.getId(), email, newJwt, user.getRole(), refreshToken);
 
             return new ResponseEntity<>(dto, HttpStatus.OK);
         }
@@ -97,7 +106,7 @@ public class AuthController {
     @GetMapping("/{email}")
     public ResponseEntity<?> getByEmail(@PathVariable String email) {
 
-        return new ResponseEntity<>(userService.getByEmail(email),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getByEmail(email), HttpStatus.OK);
 
     }
 }

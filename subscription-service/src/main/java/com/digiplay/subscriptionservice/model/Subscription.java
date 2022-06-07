@@ -20,12 +20,12 @@ public class Subscription {
     private long id;
 
     private Double price;
-
-    @OneToOne(cascade=CascadeType.ALL,orphanRemoval = true)
-    private CreditCard creditCard;
     private Timestamp validFrom;
     private Timestamp validUntil;
-//    private boolean isValid;
+    private Long userId;
+
+//    @OneToOne(cascade=CascadeType.ALL,orphanRemoval = true)
+//    private CreditCard creditCard;
 
 
 //    public Subscription(Double price, CreditCard creditCard, Timestamp validFrom, Timestamp validUntil) {

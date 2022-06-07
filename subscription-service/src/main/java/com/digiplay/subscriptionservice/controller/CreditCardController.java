@@ -27,10 +27,10 @@ public class CreditCardController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createSubscription(@RequestBody CreditCard cd) {
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<?> createSubscription(@PathVariable("userId") Long userId, @RequestBody CreditCard cd) {
         try {
-            this.subscriptionService.createNewSubscription(cd);
+            this.subscriptionService.createNewSubscription(userId, cd);
         } catch (CreditCardException e) {
             return new ResponseEntity<CreditCardResponseDTO>(new CreditCardResponseDTO(cd.getNumber(), false, e.getMessage()),
                     HttpStatus.NOT_FOUND);
@@ -40,21 +40,21 @@ public class CreditCardController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/isvalid/{id}")
-    public ResponseEntity<?> isSubscriptionValid(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(subscriptionService.isSubscriptionValid(id), HttpStatus.OK);
+    @GetMapping("/isvalid/{userId}")
+    public ResponseEntity<?> isSubscriptionValid(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(subscriptionService.isSubscriptionValid(userId), HttpStatus.OK);
 
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<?> getSubscription(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(subscriptionService.getSubscription(id), HttpStatus.OK);
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<?> getSubscription(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(subscriptionService.getSubscription(userId), HttpStatus.OK);
 
     }
 
-    @DeleteMapping("/cancel/{id}")
-    public ResponseEntity<?> cancelSubscription(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(subscriptionService.cancelSubscription(id), HttpStatus.OK);
+    @DeleteMapping("/cancel/{userId}")
+    public ResponseEntity<?> cancelSubscription(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(subscriptionService.cancelSubscription(userId), HttpStatus.OK);
 
     }
 

@@ -8,7 +8,7 @@ services:
     container_name: digiplay-registry
 
   gateway-service:
-    image: 'digiplay-gateway-service:latest'
+    image: 'digiplay-gateway:latest'
     ports:
       - "8080:8080"
     container_name: digiplay-gateway-service
@@ -19,10 +19,10 @@ services:
       - zuul.routes.authservice.sensitive-headers=Cookie,Set-Cookie
 
   auth-service:
-    image: 'auth-service:latest'
+    image: 'digiplay-auth-service:latest'
     ports:
       - "8081:8081"
-    container_name: auth-service
+    container_name: digiplay-auth-service
     depends_on:
       users-db:
         condition: service_healthy
@@ -39,7 +39,7 @@ services:
     image: 'postgres:13.1-alpine'
     container_name: users_db
     ports:
-      - "5543:5432"
+      - "5533:5432"
     environment:
       - POSTGRES_DB=users_db
       - POSTGRES_USER=postgres
@@ -51,7 +51,7 @@ services:
       retries: 5
 
   movie-service:
-    image: 'movie-service:latest'
+    image: 'digiplay-movie-service:latest'
     ports:
       - "8082:8082"
     container_name: movie-service
@@ -59,7 +59,7 @@ services:
       movies-db:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://movies_db:5432/movies
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://movies:5432/movies
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -70,7 +70,7 @@ services:
     image: 'postgres:13.1-alpine'
     container_name: movies
     ports:
-      - "5544:5432"
+      - "5534:5432"
     environment:
       - POSTGRES_DB=movies
       - POSTGRES_USER=postgres

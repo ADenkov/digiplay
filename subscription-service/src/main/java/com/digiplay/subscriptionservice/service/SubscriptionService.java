@@ -2,9 +2,11 @@ package com.digiplay.subscriptionservice.service;
 
 import com.digiplay.subscriptionservice.model.CreditCard;
 import com.digiplay.subscriptionservice.model.Subscription;
-import com.digiplay.subscriptionservice.repository.CreditCardRepository;
 import com.digiplay.subscriptionservice.repository.SubscriptionRepository;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 @Service
 public class SubscriptionService {
@@ -23,7 +26,15 @@ public class SubscriptionService {
     private SubscriptionRepository repository;
 
 
-    public Subscription createNewSubscription(CreditCard creditCard) {
+    @KafkaListener(topics = {"deleteSubscription"}, groupId = "deleteSubscription")
+    public void consume(ConsumerRecord<String, Long> record) {
+        Long userId = record.value();
+        Subscription sub = repository.findByUserId(userId);
+        repository.delete(sub);
+    }
+
+
+    public Subscription createNewSubscription(long id, CreditCard creditCard) {
         creditCardService.validate(creditCard);
 
         LocalDateTime now = LocalDateTime.now();
@@ -32,9 +43,9 @@ public class SubscriptionService {
 
         return repository.save(Subscription.builder()
                 .price(10.99)
-                .creditCard(creditCard)
                 .validUntil(validUntil)
                 .validFrom(validFrom)
+                .userId(id)
                 .build());
     }
 
@@ -46,15 +57,15 @@ public class SubscriptionService {
         return new Timestamp(d.getTime());
     }
 
-    public boolean isSubscriptionValid(Long subscriptionId) {
-        Subscription subscription = repository.findById(subscriptionId).orElse(null);
+    public boolean isSubscriptionValid(Long userId) {
+        Subscription subscription = repository.findByUserId(userId);
         Timestamp validUntil = subscription.getValidUntil();
         return validUntil.after(Timestamp.valueOf(LocalDateTime.now()));
     }
 
-    public boolean cancelSubscription(Long id) throws EntityNotFoundException {
+    public boolean cancelSubscription(Long userId) throws EntityNotFoundException {
         try {
-            Subscription subscription = repository.findById(id).orElse(null);
+            Subscription subscription = repository.findByUserId(userId);
             repository.delete(subscription);
         } catch (EntityNotFoundException e) {
             throw new EntityNotFoundException("Subscription doesn't exist");
@@ -63,7 +74,7 @@ public class SubscriptionService {
         return true;
     }
 
-    public Subscription getSubscription(Long id) {
-        return repository.findById(id).orElse(null);
+    public Subscription getSubscription(Long userId) {
+        return repository.findByUserId(userId);
     }
 }
