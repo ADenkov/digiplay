@@ -42,13 +42,13 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=com.digiplay:subscription-service
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: |
-        mvn -B package --file ./subscription-service/pom.xml
- #      gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
- #       gcloud auth configure-docker europe-west1-docker.pkg.dev
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file movie-streaming-service/pom.xml -Dsonar.projectKey=com.digiplay:subscription-service
+#     - uses: actions/checkout@v3
+#     - name: Build the Docker image
+#       run: |
+#         mvn -B package --file ./subscription-service/pom.xml
+#       gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+#        gcloud auth configure-docker europe-west1-docker.pkg.dev
 #        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:v2.0.BETA
 
 #        docker build . --file Dockerfile --tag my-image-name:$(date +%s)
