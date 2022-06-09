@@ -44,5 +44,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_MOVIE }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file movie-streaming-service/pom.xml -Dsonar.projectKey=ADenkov_digiplay
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file movie-streaming-service/pom.xml -Dsonar.projectKey=digiplay:video-streaming-service
 
