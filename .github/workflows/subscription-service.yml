@@ -46,8 +46,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
-        ./mvnw clean package
-  #      gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+        mvn -B package --file subscription-service/pom.xml
+ #      gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
  #       gcloud auth configure-docker europe-west1-docker.pkg.dev
 #        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:v2.0.BETA
 
