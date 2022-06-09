@@ -15,7 +15,6 @@
 	<description>Subscription service for Digiplay</description>
 	<properties>
 		<java.version>11</java.version>
-<!--		<spring-cloud.version>Hoxton.SR1</spring-cloud.version>-->
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 		<sonar.organization>adenkov</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
