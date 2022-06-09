@@ -28,7 +28,23 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: digiplay-gateway/gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
       with:
-        arguments: build
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache Gradle packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_GATEWAY }}
+      run: |
+        cd digiplay-gateway
+        chmod +x ./gradlew
+        ./gradlew build sonarqube --info
