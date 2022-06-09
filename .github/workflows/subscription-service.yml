@@ -48,13 +48,14 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v0'
       with:
-#         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
         run: |
           mvn -B package --file subscription-service/pom.xml
-          gcloud auth login --brief --cred-file="${{ secrets.GOOGLE_CREDENTIALS }}"
+
           gcloud auth configure-docker europe-west1-docker.pkg.dev
           docker built -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest .
           docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest
+#          gcloud auth login --brief --cred-file="${{ secrets.GOOGLE_CREDENTIALS }}"
 #     - uses: actions/checkout@v3
 #     - name: Build the Docker image
 #       run: |
