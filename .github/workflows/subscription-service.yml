@@ -53,8 +53,8 @@ jobs:
         cd subscription-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest .
-        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest
+        docker build -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-subscription-service:latest .
+        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-subscription-service:latest
 #          gcloud auth login --brief --cred-file="${{ secrets.GOOGLE_CREDENTIALS }}"
 #     - uses: actions/checkout@v3
 #     - name: Build the Docker image
