@@ -2,6 +2,16 @@ plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.sonarqube" version "3.4.0.2513"
+}
+
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "digiplay:registry"
+    property "sonar.organization", "adenkov"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
 
 group = 'com.example'
