@@ -43,3 +43,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_AUTH }}
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar --file digiplay-auth-service/pom.xml -Dsonar.projectKey=com.example:digiplay-auth-service
+    - uses: 'actions/checkout@v3'
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+    - run: |
+        cd digiplay-auth-service/
+        mvn -B package --file ./pom.xml
+        gcloud auth configure-docker europe-west1-docker.pkg.dev
+        docker build -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest .
+        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest
