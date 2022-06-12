@@ -11,6 +11,7 @@ The technologies used in the project can be grouped in the following manner
   - **Spring Boot** - Java web framework
   - <a href="https://cloud.google.com/sql">Cloud SQL</a> - Database, PostgreSQL instance
   - <a href="https://cloud.google.com/storage" target="_blank">Google Cloud Storage</a> - File system
+  - <a href="https://confluent.io" target="_blank">Confluent Cloud</a> - Apache Kafka message broker provider
 * **Frontend project** - Digiplay Client
   - **ReactJS** - Frontend framework
 * **DevOps** - Infrastructure
