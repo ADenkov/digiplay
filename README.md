@@ -1,11 +1,11 @@
 # Digiplay
-Monorepository for an individual project for my portfolio in **semester 6** - Enterprise Software. 
+Monorepository for an individual project for my portfolio in **Semester 6 - Enterprise Software.**
 
 ## Description
 A web application providing movie streaming functionality, provided a user is authenticated and with an active subscription. Based on <a href="https://www.netflix.com">Netflix</a> and utilizing a microservice-based architecture. Movie files are stored and accessed through <a href="https://cloud.google.com/storage" target="_blank">Google Cloud Storage</a>. Mock payment system, subscription purchase happens based on credit card validity.
 
 ## Tech stack
-The technologies used in the project can be grouped in the following order
+The technologies used in the project can be grouped in the following manner
 * **Backend project** - Digiplay Microservices
   - **Java** - Microservice architecture
   - **Spring Boot** - Java web framework
