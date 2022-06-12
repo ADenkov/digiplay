@@ -2,7 +2,7 @@
 Monorepository for an individual project for my portfolio in **Semester 6 - Enterprise Software.**
 
 ## Description
-A web application providing movie streaming functionality, given a user is authenticated and with an active subscription. Based on <a href="https://www.netflix.com">Netflix</a> and utilizing a microservice-based architecture. Movie files are stored and accessed through <a href="https://cloud.google.com/storage" target="_blank">Google Cloud Storage</a>. Mock payment system, subscription purchase happens based on credit card validation.
+A web application providing movie streaming functionality, given a user is authenticated and authorized with an active subscription. Based on <a href="https://www.netflix.com">Netflix</a> and utilizing a microservice-based architecture. Movie files are stored and accessed through <a href="https://cloud.google.com/storage" target="_blank">Google Cloud Storage</a>. Mock payment system, subscription purchase happens based on credit card validation.
 
 ## Tech stack
 The technologies used in the project can be grouped in the following manner
