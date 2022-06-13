@@ -53,5 +53,6 @@ jobs:
         cd subscription-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-subscription-service:latest .
-        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-subscription-service:latest
+        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest .
+        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
+        kubectl set image deployment digiplay-subscription-service --image=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
