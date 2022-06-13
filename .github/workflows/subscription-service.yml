@@ -55,4 +55,4 @@ jobs:
         gcloud auth configure-docker europe-west1-docker.pkg.dev
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
-        kubectl set deployment digiplay-subscription-service --image=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
+        kubectl set image digiplay-subscription-service --image=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
