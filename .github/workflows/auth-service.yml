@@ -57,7 +57,7 @@ jobs:
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9 .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9
         gcloud container clusters get-credentials digiplay-cluster --zone europe-west1-b
-        sleep 5s
+        sleep 20s
         kubectl set image deployment/digiplay-auth-service digiplay-auth-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9
-        sleep 5s
+        sleep 20s
         kubectl get nodes
