@@ -49,9 +49,15 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-    - run: |
+    - name: 'Push and deploy'
+      run: |
         cd digiplay-auth-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest .
-        docker push europe-west1-docker.pkg.dev/northern-card-349411/digiplay-repo/digiplay-auth-service:latest
+        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:latest .
+        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:latest
+        gcloud container clusters get-credentials digiplay-cluster --zone europe-west1-b
+        sleep 5s
+        kubectl set image deployment/digiplay-auth-service digiplay-auth-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:latest
+        sleep 5s
+        kubectl get nodes
