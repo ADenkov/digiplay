@@ -52,7 +52,7 @@ jobs:
     - name: 'Push and deploy'
       run: |
         cd digiplay-auth-service/
-        mvn -B package --file ./pom.xml
+        mvn clean -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v10 .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v10
