@@ -27,7 +27,6 @@ public class UserService {
         this.template = template;
     }
 
-
     public AppUser register(AppUser user) {
         try {
             String encodedPassword = encoder.encode(user.getPassword());

@@ -33,7 +33,7 @@ public class AuthController {
             return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>("User successfully registered with email " + registeredUser.getEmail(), HttpStatus.OK);
+        return new ResponseEntity<>("User successfully registered with email " + registeredUser.getEmail() + " , ID: " + registeredUser.getId(), HttpStatus.OK);
     }
 
     @PostMapping("/login")
