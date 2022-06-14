@@ -49,10 +49,11 @@ jobs:
       uses: 'google-github-actions/auth@v0'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+    - name: 'Push and deploy'
     - run: |
         cd subscription-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
-        kubectl set image deployment/digiplay-subscription-service digiplay-subscription-service=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
+        kubectl set image digiplay-subscription-service digiplay-subscription-service=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
