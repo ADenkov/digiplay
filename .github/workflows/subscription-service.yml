@@ -57,5 +57,3 @@ jobs:
         docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest .
         docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
         gcloud container clusters get-credentials digiplay-cluster --zone europe-west1-b
-        kubectl get nodes
-        kubectl set image deployment/digiplay-subscription-service digiplay-subscription-service=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
