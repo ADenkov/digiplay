@@ -54,10 +54,10 @@ jobs:
         cd digiplay-auth-service/
         mvn clean -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v10 .
-        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v10
+        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9 .
+        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9
         gcloud container clusters get-credentials digiplay-cluster --zone europe-west1-b
         sleep 5s
-        kubectl set image deployment/digiplay-auth-service digiplay-auth-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v10
+        kubectl set image deployment/digiplay-auth-service digiplay-auth-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-auth-service:v9
         sleep 5s
         kubectl get nodes
