@@ -50,7 +50,7 @@ jobs:
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
     - name: 'Push and deploy'
-    - run: |
+      run: |
         cd subscription-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
