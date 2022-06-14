@@ -54,9 +54,10 @@ jobs:
         cd subscription-service/
         mvn -B package --file ./pom.xml
         gcloud auth configure-docker europe-west1-docker.pkg.dev
-        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:v2 .
-        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:v2
+        docker build -t europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest .
+        docker push europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
         gcloud container clusters get-credentials digiplay-cluster --zone europe-west1-b
-        kubectl set image deployment/digiplay-subscription-service digiplay-subscription-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:v2
+        sleep 5s
+        kubectl set image deployment/digiplay-subscription-service digiplay-subscription-service-sha256-1=europe-west1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/digiplay-repo/digiplay-subscription-service:latest
+        sleep 5s
         kubectl get nodes
-        kubectl describe pods
