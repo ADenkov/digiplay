@@ -8,7 +8,6 @@
 		<version>2.6.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>	
-	
 	<groupId>com.digiplay</groupId>
 	<artifactId>subscription-service</artifactId>
 	<version>1.0.0</version>
